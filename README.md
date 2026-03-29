@@ -5,6 +5,8 @@
 </p>
 
 <p align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/efekurucay/hashit/ci.yml?branch=main&label=ci" alt="CI">
+  <img src="https://img.shields.io/github/actions/workflow/status/efekurucay/hashit/release.yml?label=release" alt="Release">
   <img src="https://img.shields.io/badge/Rust-1.74%2B-000000?logo=rust" alt="Rust">
   <img src="https://img.shields.io/badge/UI-egui-2563eb" alt="egui">
   <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-0f766e" alt="Platforms">
