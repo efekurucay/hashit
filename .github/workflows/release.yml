@@ -24,10 +24,6 @@ jobs:
             os: windows-latest
             target: x86_64-pc-windows-msvc
             archive: zip
-          - name: macos-intel
-            os: macos-13
-            target: x86_64-apple-darwin
-            archive: tar.gz
           - name: macos-apple-silicon
             os: macos-14
             target: aarch64-apple-darwin
