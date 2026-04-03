@@ -28,10 +28,6 @@ jobs:
             os: macos-14
             target: aarch64-apple-darwin
             archive: tar.gz
-          - name: macos-intel
-            os: macos-13
-            target: x86_64-apple-darwin
-            archive: tar.gz
 
     steps:
       - name: Checkout
