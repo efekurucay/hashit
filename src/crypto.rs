@@ -5,6 +5,7 @@ use aes_gcm::{
 use aes_gcm_siv::{Aes256GcmSiv, Nonce as GcmSivNonce};
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use pbkdf2::pbkdf2_hmac_array;
+#[cfg(test)]
 use rand::{rngs::OsRng, RngCore};
 use sha2::Sha256;
 use thiserror::Error;
@@ -30,6 +31,7 @@ pub enum CryptoError {
     EmptyMasterKey,
     #[error("Şifreli veri bozuk, eksik veya Hashit formatında değil.")]
     InvalidPayload,
+    #[cfg(test)]
     #[error("Güvenli rastgele veri üretilemedi.")]
     RandomGenerationFailed,
     #[error("Master key'den anahtar türetilemedi.")]
@@ -44,7 +46,6 @@ pub struct EncryptedPayload;
 
 impl EncryptedPayload {
     pub fn encrypt(plaintext: &str, master_key: &str) -> Result<String, CryptoError> {
-        validate_encrypt_inputs(plaintext, master_key)?;
         Self::encrypt_v2(plaintext, master_key)
     }
 
@@ -71,6 +72,8 @@ impl EncryptedPayload {
     }
 
     fn encrypt_v2(plaintext: &str, master_key: &str) -> Result<String, CryptoError> {
+        validate_encrypt_inputs(plaintext, master_key)?;
+
         let mut key_bytes = derive_v2_key(master_key);
         let cipher =
             Aes256GcmSiv::new_from_slice(&key_bytes).map_err(|_| CryptoError::KeyDerivationFailed)?;
@@ -110,6 +113,7 @@ impl EncryptedPayload {
         String::from_utf8(decrypted).map_err(|_| CryptoError::DecryptionFailed)
     }
 
+    #[cfg(test)]
     fn encrypt_v1(plaintext: &str, master_key: &str) -> Result<String, CryptoError> {
         validate_encrypt_inputs(plaintext, master_key)?;
 
@@ -216,7 +220,7 @@ mod tests {
     }
 
     #[test]
-    fn deterministic_encryption_returns_same_output_for_same_inputs() {
+    fn same_input_and_master_key_produce_same_output() {
         let master_key = "correct horse battery staple";
         let plaintext = "efe.facebook";
 
@@ -227,7 +231,7 @@ mod tests {
     }
 
     #[test]
-    fn different_plaintexts_produce_different_outputs() {
+    fn different_inputs_produce_different_outputs() {
         let master_key = "correct horse battery staple";
 
         let facebook = EncryptedPayload::encrypt("efe.facebook", master_key).unwrap();

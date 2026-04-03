@@ -23,13 +23,14 @@ You remember **one master key**. Hashit uses it to encrypt or decrypt passwords,
 - **Simple UI** — paste text, enter your master key, encrypt or decrypt
 - **Cross-platform** — built in Rust and designed for macOS, Linux, and Windows
 - **Portable output** — encrypted text is stored as a plain string you can save anywhere
-- **Backward compatible** — decrypts existing `hashit:v1:<base64>` payloads and writes deterministic `hashit:v2:<base64>` payloads by default
+- **Deterministic output** — the same input with the same master key always produces the same encrypted output
+- **Backward compatible** — can still decrypt existing `hashit:v1:<base64>` payloads
 
 ## Features
 
 - Single-window desktop app
 - Responsive layout for narrow and wide window sizes
-- Copy plain text and encrypted output to clipboard
+- Copy input text and encrypted output to clipboard
 - Master key is not persisted to disk
 - Clean output format for easy storage and transfer
 
@@ -50,7 +51,7 @@ Payload layout:
 - **v2 (default)**
   - `1 byte` version
   - `ciphertext + 16 bytes authentication tag`
-  - deterministic: the same input + the same master key produce the same output
+  - deterministic: same input + same master key => same output
 - **v1 (legacy)**
   - `1 byte` version
   - `16 bytes` salt

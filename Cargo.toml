@@ -2,7 +2,7 @@
 name = "hashit"
 version = "0.1.2"
 edition = "2021"
-description = "Cross-platform local secret encryption app with deterministic Hashit v2 output and v1 compatibility"
+description = "Cross-platform local secret encryption app with deterministic output"
 license = "MIT"
 
 [dependencies]

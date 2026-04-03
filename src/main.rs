@@ -88,7 +88,7 @@ impl App for HashitApp {
                                 ui.add_space(8.0);
                                 self.master_key_section(ui, compact);
                                 ui.add_space(8.0);
-                                self.content_section(ui, compact, editor_height);
+                                                self.content_section(ui, compact, editor_height);
                                 ui.add_space(8.0);
                                 self.actions_section(ui, compact);
                                 ui.add_space(8.0);
@@ -121,7 +121,7 @@ impl HashitApp {
                 ui.add_space(8.0);
                 ui.horizontal_wrapped(|ui| {
                     info_chip(ui, "Local only");
-                    info_chip(ui, "AES-256-GCM");
+                    info_chip(ui, "AES-256-GCM-SIV");
                     info_chip(ui, "PBKDF2-SHA256");
                     info_chip(ui, "hashit:v2");
                 });
@@ -197,8 +197,8 @@ impl HashitApp {
         if compact {
             copy_plain = render_text_panel(
                 ui,
-                "Plain text",
-                "Paste any password, note, or secret you want to protect.",
+                "Input",
+                "Enter text like `efe.facebook`. With the same master key, Encrypt always produces the same output.",
                 &mut self.plain_text,
                 plain_copied,
                 "Copy text",
@@ -210,8 +210,8 @@ impl HashitApp {
 
             copy_encrypted = render_text_panel(
                 ui,
-                "Encrypted output",
-                "Store this Hashit payload anywhere. You will need the same master key to decrypt it.",
+                "Output",
+                "Deterministic encrypted output appears here. The same input + the same master key always produce the same value.",
                 &mut self.encrypted_text,
                 encrypted_copied,
                 "Copy output",
@@ -222,8 +222,8 @@ impl HashitApp {
             ui.columns(2, |columns| {
                 copy_plain = render_text_panel(
                     &mut columns[0],
-                    "Plain text",
-                    "Paste any password, note, or secret you want to protect.",
+                    "Input",
+                    "Enter text like `efe.facebook`. With the same master key, Encrypt always produces the same output.",
                     &mut self.plain_text,
                     plain_copied,
                     "Copy text",
@@ -233,8 +233,8 @@ impl HashitApp {
 
                 copy_encrypted = render_text_panel(
                     &mut columns[1],
-                    "Encrypted output",
-                    "Store this Hashit payload anywhere. You will need the same master key to decrypt it.",
+                    "Output",
+                    "Deterministic encrypted output appears here. The same input + the same master key always produce the same value.",
                     &mut self.encrypted_text,
                     encrypted_copied,
                     "Copy output",
